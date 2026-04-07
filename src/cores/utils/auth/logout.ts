@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import env from "@config/env";
 import Errors from "@errors/errors";
-import { queryOne } from "@utils/query";
+import { queryOne } from "@utils/shared/query";
 
 export default async function logoutHelper(refreshToken: string) {
   if (!refreshToken)

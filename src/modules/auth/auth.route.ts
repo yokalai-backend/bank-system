@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { login, logout, register } from "@auth/auth.controller";
-import { validateBody } from "@utils/validate";
+import { validateBody } from "@utils/shared/validate";
 import { loginSchema, registerSchema } from "@auth/auth.schema";
 import { refreshToken } from "@auth/auth.controller";
 
