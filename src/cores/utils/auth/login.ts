@@ -1,6 +1,6 @@
 import { Tokens, User } from "@auth/auth.type";
 import { randomUUID } from "crypto";
-import { queryOne } from "@utils/query";
+import { queryOne } from "@utils/shared/query";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import Errors from "@errors/errors";

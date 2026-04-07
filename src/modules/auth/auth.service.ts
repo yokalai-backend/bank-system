@@ -6,6 +6,7 @@ import logoutHelper from "@utils/auth/logout";
 import refreshTokenHelper from "@utils/auth/refresh.token";
 import { LoginProps, RegisterProps } from "@auth/auth.schema";
 import { NewTokens, Tokens } from "@auth/auth.type";
+import addUserWallet from "@utils/auth/add.user.wallet";
 
 export async function registerService({
   username,
@@ -15,7 +16,9 @@ export async function registerService({
   const hashed = await bcrypt.hash(password, 10);
 
   try {
-    await authRepo.register(username, hashed, email);
+    const user = await authRepo.register(username, hashed, email);
+
+    await addUserWallet(user?.id!);
   } catch (error: any) {
     if (error.code === "23505") {
       throw Errors.conflict("Email already exists", "EMAIL_DUPLICATE");

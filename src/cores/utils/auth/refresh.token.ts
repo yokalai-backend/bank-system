@@ -1,4 +1,4 @@
-import { queryOne } from "@utils/query";
+import { queryOne } from "@utils/shared/query";
 import jwt, { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
 import { randomUUID } from "crypto";
 import { NewTokens, Roles } from "@auth/auth.type";
