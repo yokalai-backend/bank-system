@@ -12,7 +12,7 @@ const userRepo = {
 
   mybalance: async (userId: string) =>
     queryOne<{ balance: string }>(
-      `SELECT w.balance FROM users u INNER JOIN user_wallet w ON u.id = w.user_id WHERE w.user_id = $1 AND u.is_active = true`,
+      `SELECT b.balance FROM users u INNER JOIN bank_balance b ON u.id = b.user_id WHERE b.user_id = $1 AND u.is_active = true`,
       [userId],
     ),
 
