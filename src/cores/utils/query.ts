@@ -1,0 +1,19 @@
+import pool from "../config/db";
+
+export async function queryOne<T>(
+  sql: string,
+  values?: unknown[],
+): Promise<T | null> {
+  const result = await pool.query(sql, values);
+
+  return result.rows[0] ?? null;
+}
+
+export async function queryMany<T>(
+  sql: string,
+  values?: unknown[],
+): Promise<T[]> {
+  const result = await pool.query(sql, values);
+
+  return result.rows;
+}
