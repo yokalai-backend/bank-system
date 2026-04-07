@@ -1,4 +1,5 @@
 # Logs
+.devnotes
 logs
 *.log
 npm-debug.log*
