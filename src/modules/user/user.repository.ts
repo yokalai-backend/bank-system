@@ -12,7 +12,7 @@ const userRepo = {
 
   myWallet: async (userId: string) =>
     queryOne<{ balance: number }>(
-      `SELECT balance FROM user_wallet WHERE id = $1`,
+      `SELECT balance FROM user_wallet WHERE user_id = $1`,
       [userId],
     ),
 
