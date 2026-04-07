@@ -4,6 +4,7 @@ import cookie from "fastify-cookie";
 import authRoute from "@auth/auth.route";
 import response from "plugins/response";
 import userRoute from "@user/user.route";
+import bankRoute from "@bank/bank.route";
 
 export default async function buildApp() {
   const app = await fastify();
@@ -13,6 +14,7 @@ export default async function buildApp() {
 
   app.register(authRoute, { prefix: "/auth" });
   app.register(userRoute, { prefix: "/user" });
+  app.register(bankRoute, { prefix: "/bank" });
 
   app.setErrorHandler(async (error: any, request: any, reply: any) => {
     globalErrors(error, reply);
