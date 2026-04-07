@@ -1,23 +1,24 @@
 import verifyToken from "@utils/shared/verify.token";
 import { FastifyInstance } from "fastify";
-import { me, myBalance, updateMe } from "./user.controller";
+import { me, myWallet, updateMe } from "./user.controller";
 import { updateUserSchema } from "./user.schema";
 import { validateBody } from "@utils/shared/validate";
+import usersActive from "plugins/users.active";
 
 export default function routeName(app: FastifyInstance) {
   app.register(verifyToken);
 
+  app.register(usersActive);
+
   app.get("/me", me);
 
-  app.get("/my-balance", myBalance);
+  app.get("/my-wallet", myWallet);
 
   app.post(
     "/update-me",
     { preValidation: validateBody(updateUserSchema) },
     updateMe,
   );
-
-  app.patch("/ex", () => console.log("Example"));
 
   app.put("/ex", () => console.log("Example"));
 }

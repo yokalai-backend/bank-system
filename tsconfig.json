@@ -6,7 +6,8 @@
       "@errors/*": ["cores/errors/*"],
       "@utils/*": ["cores/utils/*"],
       "@auth/*": ["modules/auth/*"],
-      "@user/*": ["modules/user/*"]
+      "@user/*": ["modules/user/*"],
+      "@bank/*": ["modules/bank/*"]
     },
     /* Visit https://aka.ms/tsconfig to read more about this file */
 

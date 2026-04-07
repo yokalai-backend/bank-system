@@ -6,13 +6,13 @@ import { UserOutProps } from "@utils/shared/user.parser";
 const userRepo = {
   me: async (userId: string) =>
     queryOne<UserOutProps>(
-      `SELECT id, username, role, created_at FROM users WHERE id = $1 AND is_active = true`,
+      `SELECT id, username, role, created_at FROM users WHERE id = $1`,
       [userId],
     ),
 
-  mybalance: async (userId: string) =>
-    queryOne<{ balance: string }>(
-      `SELECT b.balance FROM users u INNER JOIN bank_balance b ON u.id = b.user_id WHERE b.user_id = $1 AND u.is_active = true`,
+  myWallet: async (userId: string) =>
+    queryOne<{ balance: number }>(
+      `SELECT balance FROM user_wallet WHERE id = $1`,
       [userId],
     ),
 

@@ -33,15 +33,15 @@ export default async function updateMeHelper(
     values.push(hash);
   }
 
-  values.push(userId, true);
+  values.push(userId);
 
-  const sqlStr = `UPDATE users SET ${params.join(", ")} WHERE id = $${i++} AND is_active = $${i++}`;
+  const sqlStr = `UPDATE users SET ${params.join(", ")} WHERE id = $${i++}`;
 
   try {
     await client.query(`BEGIN`);
 
     const user = await client.query(
-      `SELECT id FROM users WHERE id = $1 AND is_active = true FOR UPDATE NOWAIT`,
+      `SELECT id FROM users WHERE id = $1 FOR UPDATE NOWAIT`,
       [userId],
     ); // Lock the row so another device with the same user id won't be able to update at the same time
     if (user.rowCount === 0)
