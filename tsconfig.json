@@ -7,7 +7,8 @@
       "@utils/*": ["cores/utils/*"],
       "@auth/*": ["modules/auth/*"],
       "@user/*": ["modules/user/*"],
-      "@bank/*": ["modules/bank/*"]
+      "@bank/*": ["modules/bank/*"],
+      "@redis/*": ["cores/redis/*"]
     },
     /* Visit https://aka.ms/tsconfig to read more about this file */
 
