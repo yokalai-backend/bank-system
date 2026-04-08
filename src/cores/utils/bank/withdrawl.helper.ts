@@ -1,5 +1,6 @@
 import pool from "@config/db";
 import Errors from "@errors/errors";
+import redisClient from "@redis/redis";
 
 export default async function withdrawlHelper(
   userId: string,
@@ -9,14 +10,6 @@ export default async function withdrawlHelper(
 
   try {
     await client.query(`BEGIN`);
-
-    const isUserActive = await client.query(
-      `SELECT is_active FROM users WHERE id = $1`,
-      [userId],
-    );
-
-    if (!isUserActive.rows[0].is_active)
-      throw Errors.notFound("User not found", "USER_NOT_FOUND");
 
     const updateBankBalance = await client.query(
       `UPDATE bank_balance SET balance = balance - $1, 
@@ -41,7 +34,9 @@ export default async function withdrawlHelper(
 
     await client.query("COMMIT");
 
-    return `Withdrawl successfull, received amount of money ${amount}`;
+    await redisClient.del(`balance:${userId}`);
+
+    return `Withdrawal successfull, received amount of money ${amount}`;
   } catch (error) {
     await client.query("ROLLBACK");
 
