@@ -5,9 +5,12 @@ import authRoute from "@auth/auth.route";
 import response from "plugins/response";
 import userRoute from "@user/user.route";
 import bankRoute from "@bank/bank.route";
+import { connectRedis } from "cores/redis/redis";
 
 export default async function buildApp() {
   const app = await fastify();
+
+  await connectRedis(); // Connect to redis
 
   app.register(cookie);
   app.register(response);
