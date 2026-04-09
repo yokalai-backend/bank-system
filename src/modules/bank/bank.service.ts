@@ -20,8 +20,12 @@ export async function depositService(
   return await bankRepo.deposit(userId, amount);
 }
 
-export async function exsName3() {
-  // Code goes here
+export async function transferService(
+  userId: string,
+  toUserId: string,
+  amount: number,
+): Promise<string> {
+  return await bankRepo.transfer(userId, toUserId, amount);
 }
 
 export async function exsName4() {
