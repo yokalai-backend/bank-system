@@ -1,6 +1,7 @@
 import withdrawlHelper from "@utils/bank/withdrawl.helper";
 import { queryOne } from "@utils/shared/query";
 import { cache } from "@redis/cache";
+import depositHelper from "@utils/bank/deposit.helper";
 
 const bankRepo = {
   mybalance: async (userId: string) =>
@@ -13,9 +14,10 @@ const bankRepo = {
 
   withdrawl: async (userId: string, amount: number): Promise<string> =>
     withdrawlHelper(userId, amount),
-  exf2: async () => {
-    // Code goes here
-  },
+
+  deposit: async (userId: string, amount: number) =>
+    depositHelper(userId, amount),
+
   exf3: async () => {
     // Code goes here
   },

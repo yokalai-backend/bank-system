@@ -1,5 +1,9 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import { myBalanceService, witdrawlService } from "./bank.service";
+import {
+  depositService,
+  myBalanceService,
+  witdrawlService,
+} from "./bank.service";
 
 export async function myBalance(req: FastifyRequest, rep: FastifyReply) {
   const result = await myBalanceService(req.user.id);
@@ -16,8 +20,13 @@ export async function witdrawl(
   rep.ok(result, null);
 }
 
-export async function excName2(req: FastifyRequest, rep: FastifyReply) {
-  // Code goes here
+export async function deposit(
+  req: FastifyRequest<{ Body: { amount: number } }>,
+  rep: FastifyReply,
+) {
+  const result = await depositService(req.user.id, req.body.amount);
+
+  rep.ok(result, null);
 }
 
 export async function excName3(req: FastifyRequest, rep: FastifyReply) {

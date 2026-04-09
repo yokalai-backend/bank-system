@@ -24,13 +24,10 @@ export default async function withdrawlHelper(
         "INSUFFICIENT_BALANCE",
       );
 
-    const updateWallet = await client.query(
+    await client.query(
       `UPDATE user_wallet SET balance = balance + $1 WHERE user_id = $2 RETURNING id`,
       [amount, userId],
     );
-
-    if (updateWallet.rowCount === 0)
-      throw Error("User wallet does not received"); // Safety purposes
 
     await client.query("COMMIT");
 
