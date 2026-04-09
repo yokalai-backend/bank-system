@@ -2,7 +2,7 @@ import withdrawlHelper from "@utils/bank/withdrawl.helper";
 import { queryOne } from "@utils/shared/query";
 import { cache } from "@redis/cache";
 import depositHelper from "@utils/bank/deposit.helper";
-import transferHelper from "@utils/auth/transfer.helper";
+import transferHelper from "@utils/bank/transfer.helper";
 
 const bankRepo = {
   mybalance: async (userId: string) =>
