@@ -5,12 +5,15 @@ export default function balance(
   balanceAfterTransaction: number,
   type: Transactions,
 ): BalanceHistory {
-  const balanceBefore =
-    type === "withdraw"
-      ? Number(balanceAfterTransaction) + amount
-      : type === "deposit"
-        ? Number(balanceAfterTransaction) - amount
-        : 0;
+  let balanceBefore: number;
+
+  if (type === "withdraw" || type === "transfer") {
+    balanceBefore = Number(balanceAfterTransaction) + amount;
+  } else if (type === "deposit") {
+    balanceBefore = Number(balanceAfterTransaction) - amount;
+  } else {
+    balanceBefore = 0;
+  }
 
   return {
     balanceBefore,
