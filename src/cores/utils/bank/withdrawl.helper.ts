@@ -1,6 +1,8 @@
 import pool from "@config/db";
 import Errors from "@errors/errors";
 import redisClient from "@redis/redis";
+import transactionAudit from "./transaction.audit";
+import balance from "./balance.history";
 
 export default async function withdrawlHelper(
   userId: string,
@@ -14,7 +16,7 @@ export default async function withdrawlHelper(
     const updateBankBalance = await client.query(
       `UPDATE bank_balance SET balance = balance - $1, 
       updated_at = NOW() WHERE 
-      user_id = $2 AND balance >= $1 RETURNING id`,
+      user_id = $2 AND balance >= $1 RETURNING id, balance`,
       [amount, userId],
     );
 
@@ -28,6 +30,13 @@ export default async function withdrawlHelper(
       `UPDATE user_wallet SET balance = balance + $1 WHERE user_id = $2 RETURNING id`,
       [amount, userId],
     );
+
+    // Save progress in audit
+    const currentBalance = updateBankBalance.rows[0].balance;
+
+    const history = balance(amount, currentBalance, "withdraw");
+
+    await transactionAudit(userId, "withdraw", history);
 
     await client.query("COMMIT");
 
