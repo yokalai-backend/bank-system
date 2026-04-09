@@ -1,8 +1,8 @@
 import verifyToken from "@utils/shared/verify.token";
 import { FastifyInstance } from "fastify";
-import { myBalance, witdrawl } from "@bank/bank.controller";
+import { deposit, myBalance, witdrawl } from "@bank/bank.controller";
 import { validateBody } from "@utils/shared/validate";
-import { withdrawlSchema } from "./bank.schema";
+import { transaction } from "./bank.schema";
 import usersActive from "plugins/users.active";
 
 export default function bankRoute(app: FastifyInstance) {
@@ -13,9 +13,11 @@ export default function bankRoute(app: FastifyInstance) {
 
   app.post(
     "/withdrawl",
-    { preValidation: validateBody(withdrawlSchema) },
+    { preValidation: validateBody(transaction) },
     witdrawl,
   );
+
+  app.post("/deposit", { preValidation: validateBody(transaction) }, deposit);
 
   app.post("/ex", () => console.log("Example"));
 

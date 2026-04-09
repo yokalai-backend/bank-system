@@ -7,10 +7,7 @@ const pool = new Pool({
   database: env.DATABASE,
   password: env.DB_PASSWORD,
   port: env.DB_PORT,
-});
-
-pool.connect(() => {
-  console.log("Database is connected");
+  max: 100,
 });
 
 export default pool;

@@ -13,8 +13,11 @@ export async function witdrawlService(
   return await bankRepo.withdrawl(userId, amount); // Withdraw from the bank into your own wallet
 }
 
-export async function exsName2() {
-  // Code goes here
+export async function depositService(
+  userId: string,
+  amount: number,
+): Promise<string> {
+  return await bankRepo.deposit(userId, amount);
 }
 
 export async function exsName3() {
