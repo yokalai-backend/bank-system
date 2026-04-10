@@ -38,6 +38,8 @@ export async function logout(req: FastifyRequest, rep: FastifyReply) {
 
   await logoutService(refreshToken);
 
+  rep.clearCookie("refTkn", { httpOnly: true, path: "/auth" });
+
   rep.ok("Logout is successfull", null);
 }
 

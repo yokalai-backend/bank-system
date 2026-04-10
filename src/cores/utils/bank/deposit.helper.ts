@@ -11,6 +11,10 @@ export default async function depositHelper(
 
   try {
     await client.query(`BEGIN`);
+    const user = await client.query(
+      `SELECT email FROM users WHERE id = $1 FOR UPDATE`,
+      [userId],
+    );
 
     const updateWallet = await client.query(
       `UPDATE user_wallet SET balance = balance - $1 WHERE user_id = $2 AND balance >= $1 RETURNING id`,
@@ -30,7 +34,13 @@ export default async function depositHelper(
 
     const history = balance(amount, currentBalance, "deposit");
 
-    await transactionAudit(client, userId, "deposit", history);
+    await transactionAudit(
+      client,
+      userId,
+      user.rows[0].email,
+      "deposit",
+      history,
+    );
 
     await client.query(`COMMIT`);
 

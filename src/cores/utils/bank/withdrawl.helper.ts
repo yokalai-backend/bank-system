@@ -13,6 +13,11 @@ export default async function withdrawlHelper(
   try {
     await client.query(`BEGIN`);
 
+    const user = await client.query(
+      `SELECT email FROM users WHERE id = $1 FOR UPDATE`,
+      [userId],
+    );
+
     const updateBankBalance = await client.query(
       `UPDATE bank_balance SET balance = balance - $1, 
       updated_at = NOW() WHERE 
@@ -36,7 +41,13 @@ export default async function withdrawlHelper(
 
     const history = balance(amount, currentBalance, "withdraw");
 
-    await transactionAudit(client, userId, "withdraw", history);
+    await transactionAudit(
+      client,
+      userId,
+      user.rows[0].email,
+      "withdraw",
+      history,
+    );
 
     await client.query("COMMIT");
 

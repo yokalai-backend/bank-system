@@ -21,13 +21,6 @@ const bankRepo = {
 
   transfer: async (userId: string, toUserId: string, amount: number) =>
     transferHelper(userId, toUserId, amount),
-
-  exf4: async () => {
-    // Code goes here
-  },
-  exf5: async () => {
-    // Code goes here
-  },
 };
 
 export default bankRepo;

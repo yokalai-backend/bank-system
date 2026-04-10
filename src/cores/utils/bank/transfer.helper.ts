@@ -12,9 +12,14 @@ export default async function transferHelper(
   try {
     await client.query("BEGIN");
 
+    const user = await client.query(
+      `SELECT email FROM users WHERE id = $1 FOR UPDATE`,
+      [userId],
+    );
+
     // 1. lock sender balance
     const senderRes = await client.query(
-      `SELECT balance 
+      `SELECT balance
        FROM bank_balance 
        WHERE user_id = $1 
        FOR UPDATE`,
@@ -64,7 +69,7 @@ export default async function transferHelper(
     );
 
     // 6. audit sender history (correct chain)
-    await transactionAudit(client, userId, "transfer", {
+    await transactionAudit(client, userId, user.rows[0].email, "transfer", {
       balanceBefore: senderBefore,
       balanceAfter: senderAfter,
     });
