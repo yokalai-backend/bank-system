@@ -30,7 +30,7 @@ export default async function depositHelper(
 
     const history = balance(amount, currentBalance, "deposit");
 
-    await transactionAudit(userId, "deposit", history);
+    await transactionAudit(client, userId, "deposit", history);
 
     await client.query(`COMMIT`);
 
