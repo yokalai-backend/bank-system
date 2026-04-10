@@ -36,7 +36,7 @@ export default async function withdrawlHelper(
 
     const history = balance(amount, currentBalance, "withdraw");
 
-    await transactionAudit(userId, "withdraw", history);
+    await transactionAudit(client, userId, "withdraw", history);
 
     await client.query("COMMIT");
 
