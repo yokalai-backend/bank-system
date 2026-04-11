@@ -5,6 +5,8 @@ import authRoute from "@auth/auth.route";
 import response from "plugins/response";
 import userRoute from "@user/user.route";
 import bankRoute from "@bank/bank.route";
+import cors from "@fastify/cors";
+
 import { connectRedis } from "cores/redis/redis";
 
 export default async function buildApp() {
@@ -13,6 +15,7 @@ export default async function buildApp() {
   await connectRedis(); // Connect to redis
 
   app.register(cookie);
+  app.register(cors, { origin: true });
   app.register(response);
 
   app.register(authRoute, { prefix: "/auth" });
