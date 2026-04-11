@@ -16,7 +16,7 @@ export default function globalErrors(error: any, reply: FastifyReply) {
 
   if (error instanceof ZodError) {
     const errors = {
-      message: error.issues.map((e) => e.message).join(", "),
+      message: error.issues,
       code: "INVALID_TYPE",
     };
 

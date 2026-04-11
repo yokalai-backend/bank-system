@@ -1,7 +1,7 @@
 import { FastifyInstance, FastifyReply } from "fastify";
 import fp from "fastify-plugin";
 
-type Errors = { message: string; code: string };
+type Errors = { message: string | any[]; code: string };
 
 declare module "fastify" {
   interface FastifyReply {
