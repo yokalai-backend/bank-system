@@ -15,7 +15,7 @@ export default async function buildApp() {
   await connectRedis(); // Connect to redis
 
   app.register(cookie);
-  app.register(cors, { origin: true });
+  app.register(cors, { origin: true, credentials: true });
   app.register(response);
 
   app.register(authRoute, { prefix: "/auth" });

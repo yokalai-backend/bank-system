@@ -36,7 +36,7 @@ export default async function RefreshTokenHelper(
     if (!user) throw Errors.authorization("User not found", "USER_NOT_FOUND");
 
     const newAccessToken = jwt.sign({ ...user }, env.ACCESS_TOKEN, {
-      expiresIn: "5m",
+      expiresIn: "15m",
     });
 
     const newJti = crypto.randomUUID();
