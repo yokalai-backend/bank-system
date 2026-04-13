@@ -23,7 +23,7 @@ export default async function loginHelper(
   const { id, username, role } = jwtPayload;
 
   const accessToken = jwt.sign({ id, username, role }, env.ACCESS_TOKEN, {
-    expiresIn: "5m",
+    expiresIn: "15m",
   });
 
   const jti = randomUUID();
