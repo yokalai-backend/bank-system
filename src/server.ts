@@ -5,7 +5,7 @@ async function server() {
   const app = await buildApp();
 
   try {
-    app.listen({ port: 5000 });
+    app.listen({ port: 5000, host: "0.0.0.0" });
 
     console.log("Server is running");
   } catch (error) {

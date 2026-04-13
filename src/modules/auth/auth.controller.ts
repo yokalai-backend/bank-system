@@ -6,6 +6,7 @@ import {
   registerService,
 } from "@auth/auth.service";
 import { LoginProps, RegisterProps } from "@auth/auth.schema";
+import generateDeviceId from "@utils/auth/generate.device.id";
 
 export async function register(
   req: FastifyRequest<{ Body: RegisterProps }>,
@@ -20,9 +21,7 @@ export async function login(
   req: FastifyRequest<{ Body: LoginProps }>,
   rep: FastifyReply,
 ) {
-  const prevToken = req.cookies.refTkn;
-
-  const { accessToken, refreshToken } = await loginService(req.body, prevToken);
+  const { accessToken, refreshToken } = await loginService(req.body);
 
   rep.setCookie("refTkn", refreshToken, {
     httpOnly: true,
@@ -44,16 +43,15 @@ export async function logout(req: FastifyRequest, rep: FastifyReply) {
 }
 
 export async function refreshToken(req: FastifyRequest, rep: FastifyReply) {
-  const refreshToken = req.cookies.refTkn;
+  const token = req.cookies.refTkn;
 
-  const { newAccessToken, newRefreshToken } =
-    await refreshTokenService(refreshToken);
+  const { newAccessToken, newRefreshToken } = await refreshTokenService(token);
 
   rep.setCookie("refTkn", newRefreshToken, {
     httpOnly: true,
     path: "/auth",
     maxAge: 60 * 60 * 24 * 7,
-  }); // Generate new refresh token
+  });
 
-  rep.ok("Access token refreshed", newAccessToken);
+  rep.ok("New access token is received", newAccessToken);
 }

@@ -28,10 +28,10 @@ export async function registerService({
   }
 }
 
-export async function loginService(
-  { password, email }: LoginProps,
-  prevToken: string,
-): Promise<Tokens> {
+export async function loginService({
+  password,
+  email,
+}: LoginProps): Promise<Tokens> {
   const user = await authRepo.login(email);
 
   if (!user) {
@@ -44,9 +44,8 @@ export async function loginService(
   const { id, username, hash, role } = user;
 
   const tokens = await loginHelper(
-    { userId: id, password: password, hashed: hash },
+    { password: password, hashed: hash },
     { id, username, role },
-    prevToken,
   );
 
   return tokens;
@@ -56,11 +55,10 @@ export async function logoutService(refreshToken: string): Promise<void> {
   await logoutHelper(refreshToken); // Log out handled by helper
 }
 
-export async function refreshTokenService(
-  refreshToken: string,
-): Promise<NewTokens> {
-  if (!refreshToken)
-    throw Errors.authorization("Needed refresh token", "INVALID_CREDENTIALS");
+export async function refreshTokenService(token: string): Promise<NewTokens> {
+  if (!token) {
+    throw Errors.authorization("No refresh token provided", "NO_REFRESH_TOKEN");
+  }
 
-  return await refreshTokenHelper(refreshToken);
+  return await refreshTokenHelper(token);
 }
