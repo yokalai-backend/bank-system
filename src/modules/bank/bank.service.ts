@@ -28,8 +28,12 @@ export async function transferService(
   return await bankRepo.transfer(userId, toUserId, amount);
 }
 
-export async function exsName4() {
-  // Code goes here
+export async function addBalanceService(
+  userId: string,
+  amount: number,
+  method: "wallet" | "bank",
+): Promise<string> {
+  return await bankRepo.addBalance(userId, amount, method);
 }
 
 export async function exsName5() {

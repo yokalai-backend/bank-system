@@ -1,5 +1,6 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import {
+  addBalanceService,
   depositService,
   myBalanceService,
   transferService,
@@ -46,8 +47,20 @@ export async function transfer(
   rep.ok(result, null);
 }
 
-export async function excName4(req: FastifyRequest, rep: FastifyReply) {
-  // Code goes here
+export async function addBalance(
+  req: FastifyRequest<{
+    Body: { amount: number };
+    Querystring: { method: "wallet" | "bank" };
+  }>,
+  rep: FastifyReply,
+) {
+  const result = await addBalanceService(
+    req.user.id,
+    req.body.amount,
+    req.query.method,
+  );
+
+  rep.ok(result, null);
 }
 
 export async function excName5(req: FastifyRequest, rep: FastifyReply) {

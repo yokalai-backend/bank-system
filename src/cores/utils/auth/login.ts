@@ -14,6 +14,8 @@ export default async function loginHelper(
 ): Promise<Tokens> {
   const verified = await bcrypt.compare(password, hashed);
 
+  console.log("New token");
+
   if (!verified)
     throw Errors.authorization(
       "Email or password is incorrect please try again",
@@ -23,7 +25,7 @@ export default async function loginHelper(
   const { id, username, role } = jwtPayload;
 
   const accessToken = jwt.sign({ id, username, role }, env.ACCESS_TOKEN, {
-    expiresIn: "15m",
+    expiresIn: "50s",
   });
 
   const jti = randomUUID();
