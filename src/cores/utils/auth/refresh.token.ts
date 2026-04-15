@@ -7,6 +7,7 @@ import { NewTokens } from "@auth/auth.type";
 export default async function RefreshTokenHelper(
   token: string,
 ): Promise<NewTokens> {
+  console.log(token);
   try {
     const { id, jti } = jwt.verify(token, env.REFRESH_TOKEN) as {
       id: string;
@@ -36,7 +37,7 @@ export default async function RefreshTokenHelper(
     if (!user) throw Errors.authorization("User not found", "USER_NOT_FOUND");
 
     const newAccessToken = jwt.sign({ ...user }, env.ACCESS_TOKEN, {
-      expiresIn: "15m",
+      expiresIn: "2m",
     });
 
     const newJti = crypto.randomUUID();

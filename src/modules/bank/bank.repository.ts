@@ -3,6 +3,7 @@ import { queryOne } from "@utils/shared/query";
 import { cache } from "@redis/cache";
 import depositHelper from "@utils/bank/deposit.helper";
 import transferHelper from "@utils/bank/transfer.helper";
+import addBalanceHelper from "@utils/bank/addBalance.helper";
 
 const bankRepo = {
   mybalance: async (userId: string) =>
@@ -21,6 +22,12 @@ const bankRepo = {
 
   transfer: async (userId: string, toUserId: string, amount: number) =>
     transferHelper(userId, toUserId, amount),
+
+  addBalance: async (
+    userId: string,
+    amount: number,
+    method: "wallet" | "bank",
+  ) => addBalanceHelper(userId, amount, method),
 };
 
 export default bankRepo;
